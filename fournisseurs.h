@@ -3,6 +3,12 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QString>
+#include <QDebug>
+#include <QFile>
+#include <QApplication>
+#include <QSqlDatabase>
+#include <QSqlError>
+
 
 class fournisseurs
 {
@@ -12,29 +18,14 @@ private:
     QString Materiel;
     int Nombre;
     int Telephone;
-    QString Date;
+    QString Date_f;
+    QString Statut;
 
 
 public:
-    fournisseurs();
-    fournisseurs(int Id, QString Nom, QString Materiel, int Nombre, int Telephone, QString Date)
-    {
-        this->Id = Id;
-        this->Nom = Nom;
-        this->Materiel = Materiel;
-        this->Nombre = Nombre;
-        this->Telephone = Telephone;
-        this->Date = Date;
+    fournisseurs(){}
+    fournisseurs(int, QString, QString, int, int, QString, QString);
 
-    }
-
-    // Setters
-    void setID(int i) { Id = i; }
-    void setNom(QString n) { Nom = n; }
-    void setMateriel(QString n) { Materiel = n; }
-    void setNombre(int e) { Nombre = e; }
-    void setTelephone(int p) { Telephone = p; }
-    void setDate(QString b) { Date = b; }
 
 
     // Getters
@@ -43,15 +34,26 @@ public:
     QString getMateriel() { return Materiel; }
     int getNombre() { return Nombre; }
     int getTelephone() { return Telephone; }
-    QString getDate() { return Date; }
+    QString getDate_f() { return Date_f; }
+    QString getStatut() { return Statut; }
+
+    // Setters
+    void setID(int i) { Id = i; }
+    void setNom(QString n) { Nom = n; }
+    void setMateriel(QString m) { Materiel = m; }
+    void setNombre(int nb) { Nombre = nb; }
+    void setTelephone(int t) { Telephone = t; }
+    void setDate_f(QString d) { Date_f = d; }
+    void setStatut(QString s) { Statut = s; }
+
 
 
     bool Ajouterfournisseurs();
     QSqlQueryModel *Afficherfournisseurs();
-    bool Modifierfournisseurs();
-    bool Supprimerfournisseurs();
-    QSqlQueryModel *Rechercherfournisseurs(QString value);
-    QSqlQueryModel *Trierfournisseurs(QString croissance, QString critere);
+    /*bool Modifierfournisseurs();*/
+    bool supprimerfournisseur(int ID_F);
+
+     bool updatefournisseur(int ID, const QString& NOM, const QString& MATERIEL, int NOMBRE, int TELEPHONE, const QString& DATE_F, const QString& STATUT);
 };
 
 #endif // FOURNISSEURS_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1058</width>
-    <height>600</height>
+    <width>1080</width>
+    <height>638</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,14 +20,15 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>70</x>
       <y>70</y>
       <width>911</width>
       <height>471</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(210, 105, 108, 255), stop:1 rgba(107, 107, 107, 255));</string>
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(210, 105, 108, 255), stop:1 rgba(107, 107, 107, 255));
+background-color: rgb(0, 10, 82);</string>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -135,24 +136,39 @@ color: rgb(129, 2, 115);</string>
         <string>Statut :</string>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox_Enreg">
+      <widget class="QLabel" name="label_9">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(129, 2, 115);</string>
+       </property>
+       <property name="text">
+        <string>Commandes</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="enregistree">
        <property name="geometry">
         <rect>
          <x>460</x>
          <y>30</y>
-         <width>101</width>
+         <width>97</width>
          <height>20</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(129, 2, 115);
-color: rgb(85, 170, 127);</string>
+        <string notr="true">color: rgb(0, 170, 0);</string>
        </property>
        <property name="text">
         <string>Enregistrée</string>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox_attente">
+      <widget class="QRadioButton" name="attente">
        <property name="geometry">
         <rect>
          <x>460</x>
@@ -168,12 +184,12 @@ color: rgb(85, 170, 127);</string>
         <string>En attente de réception</string>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox_incomplete">
+      <widget class="QRadioButton" name="incomplete">
        <property name="geometry">
         <rect>
          <x>460</x>
          <y>90</y>
-         <width>161</width>
+         <width>151</width>
          <height>20</height>
         </rect>
        </property>
@@ -184,7 +200,7 @@ color: rgb(85, 170, 127);</string>
         <string>Réception incomplète</string>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox_fin">
+      <widget class="QRadioButton" name="finalisee">
        <property name="geometry">
         <rect>
          <x>460</x>
@@ -198,22 +214,6 @@ color: rgb(85, 170, 127);</string>
        </property>
        <property name="text">
         <string>Réception finalisée</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_9">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>81</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(129, 2, 115);</string>
-       </property>
-       <property name="text">
-        <string>Commandes</string>
        </property>
       </widget>
      </widget>
@@ -307,12 +307,32 @@ color: rgb(0, 0, 0);</string>
        </property>
        <item>
         <property name="text">
-         <string>plastic</string>
+         <string>Siflet arbitre</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>fer</string>
+         <string>Panneau solaire</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Tacticlip Casal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Chronometre scolaire</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ballon</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Planche</string>
         </property>
        </item>
       </widget>
@@ -397,70 +417,213 @@ background-color: rgb(255, 255, 255);</string>
         <string>Date</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>670</x>
+         <y>10</y>
+         <width>181</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Ajouter</string>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="miseajour">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>10</y>
+         <width>181</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Mettre à jour</string>
+       </property>
+      </widget>
+      <zorder>label</zorder>
+      <zorder>lineEdit_tel</zorder>
+      <zorder>label_3</zorder>
+      <zorder>pushButton</zorder>
+      <zorder>label_6</zorder>
+      <zorder>miseajour</zorder>
      </widget>
-     <widget class="QFrame" name="Ajouter_fournisseurs">
+     <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>20</x>
+        <y>0</y>
+        <width>871</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic; color:#ffffff;&quot;&gt;Ajouter un fournisseurs&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+	
+	
+	background-color: rgb(85, 170, 255);
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 30px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::AutoText</enum>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
         <y>20</y>
-        <width>851</width>
-        <height>21</height>
+        <width>211</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton">
-      <property name="geometry">
-       <rect>
-        <x>790</x>
-        <y>410</y>
-        <width>93</width>
-        <height>28</height>
-       </rect>
+       <string notr="true">QPushButton {
+	background-color: rgb(225, 225, 225);
+    
+	
+	color: rgb(85, 0, 127);
+    
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(0, 0, 255);
+}</string>
       </property>
       <property name="text">
-       <string>Ajouter</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-      <property name="autoExclusive">
-       <bool>false</bool>
-      </property>
-      <property name="autoDefault">
-       <bool>false</bool>
-      </property>
-      <property name="default">
-       <bool>false</bool>
-      </property>
-      <property name="flat">
-       <bool>false</bool>
+       <string>Ajouter un fournisseur</string>
       </property>
      </widget>
      <zorder>frame_3</zorder>
      <zorder>frame_2</zorder>
      <zorder>frame</zorder>
      <zorder>dateEdit</zorder>
-     <zorder>Ajouter_fournisseurs</zorder>
-     <zorder>pushButton</zorder>
+     <zorder>label_2</zorder>
+     <zorder>pushButton_2</zorder>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
       <string>Afficher fournisseur</string>
      </attribute>
+     <widget class="QTableView" name="tableView">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>671</width>
+        <height>391</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="deleteButton">
+      <property name="geometry">
+       <rect>
+        <x>708</x>
+        <y>243</y>
+        <width>181</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Supprimer un fournisseurs</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="update">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>330</y>
+        <width>181</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Modifier</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>40</y>
+        <width>191</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image: url(:/images/ressource/images/APP_3.png);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
       <string>Supprimer fournisseur</string>
      </attribute>
+     <widget class="QTableView" name="tableView1">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>551</width>
+        <height>401</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -489,7 +652,7 @@ background-color: rgb(255, 255, 255);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1058</width>
+     <width>1080</width>
      <height>26</height>
     </rect>
    </property>

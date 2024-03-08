@@ -1,4 +1,8 @@
 #include "connexion.h"
+#include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
 
 connexion::connexion()
 {
@@ -22,4 +26,14 @@ test=true;
 return test;
 }
 
+
+
 void connexion::closeconnect(){ db.close(); }
+
+void connexion::executerRequete(const QString& requete)
+{
+    QSqlQuery query(db);
+    if (!query.exec(requete)) {
+        qDebug() << "Erreur d'exécution de la requête : " << query.lastError().text();
+    }
+}

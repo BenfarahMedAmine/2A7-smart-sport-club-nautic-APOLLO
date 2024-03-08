@@ -1,5 +1,7 @@
 QT       += core gui sql
 QT += quick
+QT += widgets
+DEFINES += QT_NO_DEBUG
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
