@@ -1,0 +1,203 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "materiel.h"
+#include "connection.h"
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
+#include <QMessageBox>
+#include <QStackedWidget>
+#include <QTableView>
+
+MainWindow::MainWindow(QWidget *parent)
+  : QMainWindow(parent)
+  , ui(new Ui::MainWindow)
+{
+  ui->setupUi(this);
+
+  // Load the style sheet
+  QFile styleFile("C:/Users/mohamed/OneDrive/Bureau/interface/style.qss");
+  if (styleFile.open(QFile::ReadOnly | QFile::Text)) {
+      QTextStream stream(&styleFile);
+      QString styleSheet = stream.readAll();
+      setStyleSheet(styleSheet);
+      styleFile.close();
+  } else {
+      qDebug() << "Error opening style.qss file:" << styleFile.errorString();
+  }
+
+  // Get the tableView from the stackedWidget
+  QStackedWidget* stackedWidget = ui->stackedWidget;
+  QWidget* page = stackedWidget->widget(1); // Change the index to your page number
+  QTableView* tableView = page->findChild<QTableView*>("tableView");
+
+  // Create an invite object
+  materiel m;
+
+  // Create a connection object
+  Connection c;
+
+  // Check if the connection is successful
+  if(c.createconnect())
+  {
+      // If the connection is successful, set the model of the tableView
+      tableView->setModel(m.afficher_mat());
+      QMessageBox::information(nullptr, QObject::tr("database is open"),
+                               QObject::tr("connection successful.\n"
+                                           "Click Cancel to exit."), QMessageBox::Cancel);
+  }
+  else
+  {
+      // If the connection is not successful, show an error message
+      QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                            QObject::tr("connection failed.\n"
+                                        "Click Cancel to exit."), QMessageBox::Cancel);
+  }
+  connect(ui->f_add_invite, &QPushButton::clicked, this, [this]() { navigateToPage(0); });
+  connect(ui->f_liste_courses, &QPushButton::clicked, this, [this]() { navigateToPage(1); });
+  connect(ui->f_statistics, &QPushButton::clicked, this, [this]() { navigateToPage(2); });
+}
+
+
+MainWindow::~MainWindow()
+{
+  delete ui;
+}
+
+void MainWindow::on_ajouter_clicked()
+{
+    QString etat = ui->etat->text();
+    QString prix = ui->prix->text();
+    QString id_emp = ui->id_emp->text();
+    QString id_fourni =ui->id_fourni->text();
+
+    QStackedWidget* stackedWidget = ui->stackedWidget;
+    QWidget* page = stackedWidget->widget(1); // Change the index to your page number
+    QTableView* tableView = page->findChild<QTableView*>("tableView");
+
+    if( etat.isEmpty()){
+        QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides."),QMessageBox::Cancel);
+
+    }
+    else{
+        //refresh
+        //contract con(0,type,date,date2,date3);
+        materiel materiel(0,etat,prix.toFloat(),id_emp.toInt(),id_fourni.toInt());
+        materiel.ajouter_mat();
+        tableView->setModel(materiel.afficher_mat());
+        QMessageBox::information(nullptr, QObject::tr("OK"),
+                     QObject::tr("Ajout effectué\n"
+                                 "Click cancel to exit."),QMessageBox::Cancel);
+
+        ui->etat->clear();
+        ui->prix->clear();
+        ui->id_emp->clear();
+        ui->id_fourni->clear();
+
+
+    }
+}
+
+void MainWindow::on_supprimer_clicked()
+{
+
+    int id = ui->id_mat->text().toInt();
+    materiel u;
+    u.setid_mat(id);
+    bool test =u.supprimer_mat();
+
+
+    if(test){
+        ui->tableView->setModel(u.afficher_mat());
+        QMessageBox::information(nullptr,QObject::tr("OK"),
+                                 QObject::tr("Suppression effectuée\n"
+                                             "Click Cancel to exit."),QMessageBox::Cancel);
+        //ui->type_gender->setCurrentIndex(0);
+        ui->etat->clear();
+        //ui->lineEdit_pnom->clear();
+        ui->prix->clear();
+        ui->id_emp->clear();
+        //ui->dateEnd_bday->clear();
+        ui->id_fourni->clear();
+    }
+    else {
+        QMessageBox::critical(nullptr,QObject::tr("NOT OK"),
+                                 QObject::tr("Suppression non effectuée\n"
+                                             "Click Cancel to exit."),QMessageBox::Cancel);
+    }
+}
+
+void MainWindow::on_tableView_activated(const QModelIndex &index)
+{
+    QStackedWidget* stackedWidget = ui->stackedWidget;
+    QWidget* page = stackedWidget->widget(1); // Change the index to your page number
+    QLineEdit* id = page->findChild<QLineEdit*>("id"); // Change "id" to the objectName of your id widget
+
+    // Get the ID from the first column of the selected row
+    QString value = ui->tableView->model()->data(ui->tableView->model()->index(index.row(), 0)).toString();
+    id->setText(value);
+    Connection c;
+    c.closeconnection();
+    QSqlQuery qry;
+
+    qry.prepare("select nom,pnom,sexe,email,tel,nbre_part,adresse from invite where id='"+value+"'");
+    if(qry.exec())
+    {
+        while(qry.next())
+        {
+            QString data =qry.value(0).toString();
+            ui->etat->setText(data);
+
+            data =qry.value(1).toString();
+            ui->prix->setText(data);
+            data =qry.value(2).toString();
+            ui->id_emp->setText(data);
+
+            data =qry.value(3).toString();
+            ui->id_fourni->setText(data);
+
+
+        }
+    }
+}
+
+
+/*void MainWindow::on_modifier_clicked()
+{
+    // Get the id widget from the stackedWidget
+    QStackedWidget* stackedWidget = ui->stackedWidget;
+    QWidget* page = stackedWidget->widget(0); // Change the index to your page number
+    QLineEdit* id = page->findChild<QLineEdit*>("id_mat"); // Change "id" to the objectName of your id widget
+
+    int idValue = id->text().toInt();
+    QString etat = ui->etat->text();
+    float prix =ui->prix->text().toFloat();
+    int id_emp =ui->id_emp->text().toInt();
+    int id_fourni = ui->id_fourni->text().toInt();
+
+
+    if( etat.isEmpty()){
+        QMessageBox::critical(0,qApp->tr("erreur"),qApp->tr("veillez remplir les champs vides."),QMessageBox::Cancel);
+    }
+    else{
+       materiel materiel(idValue,etat,prix.toFloat(),id_emp.toInt(),id_fourni.toInt());
+        invite.ModifierInvite();
+        ui->tableView->setModel(invite.AfficherInvites());
+        QMessageBox::information(nullptr, QObject::tr("OK"),
+                     QObject::tr("Ajout effectué\n"
+                                 "Click cancel to exit."),QMessageBox::Cancel);
+        ui->lineEdit_sexe->clear();
+        ui->lineEdit_nom->clear();
+        ui->lineEdit_pnom->clear();
+        ui->lineEdit_email->clear();
+        ui->lineEdit_tel->clear();
+        ui->lineEdit_nbrep->clear();
+        ui->lineEdit_adresse->clear();2:39 PM 3/6/20242:39 PM 3/6/20242:39 PM 3/6/2024
+        id->clear();
+    }
+}
+
+void MainWindow::navigateToPage(int pageIndex)
+{
+    ui->stackedWidget->setCurrentIndex(pageIndex);
+}*/

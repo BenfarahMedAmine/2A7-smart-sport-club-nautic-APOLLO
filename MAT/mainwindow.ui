@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1212</width>
+    <height>767</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>1221</width>
+      <height>751</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>1121</width>
+       <height>691</height>
+      </rect>
+     </property>
+     <widget class="QWidget" name="page">
+      <widget class="QPushButton" name="Stat">
+       <property name="geometry">
+        <rect>
+         <x>790</x>
+         <y>60</y>
+         <width>161</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(0, 0, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Statistics</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/pie-chart.png</normaloff>:/icons/ressource/icons/pie-chart.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>51</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ListMat">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>60</y>
+         <width>181</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(0, 0, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>List Materiel</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/clipboard.png</normaloff>:/icons/ressource/icons/clipboard.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="AddMat">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>60</y>
+         <width>181</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(0, 0, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Add Materiel</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/add-group.png</normaloff>:/icons/ressource/icons/add-group.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_34">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>40</y>
+         <width>1011</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    background-color: #000A52;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_35">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>170</y>
+         <width>1001</width>
+         <height>461</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    background-color: #C0C0C0;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 30px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QTableView" name="tableView">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>240</y>
+         <width>771</width>
+         <height>311</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pdf">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>560</y>
+         <width>161</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(0, 0, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Export PDF</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/download-pdf.png</normaloff>:/icons/ressource/icons/download-pdf.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="delete_2">
+       <property name="geometry">
+        <rect>
+         <x>490</x>
+         <y>560</y>
+         <width>141</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(0, 0, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Delete</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/delete-database.png</normaloff>:/icons/ressource/icons/delete-database.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="update">
+       <property name="geometry">
+        <rect>
+         <x>680</x>
+         <y>560</y>
+         <width>141</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(0, 0, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Update</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/update.png</normaloff>:/icons/ressource/icons/update.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>60</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="searchbar">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>190</y>
+         <width>271</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> background-color: rgb(255, 255, 255); 
+    border-radius: 15px; 
+    border: 1px solid black; </string>
+       </property>
+       <property name="placeholderText">
+        <string>Search</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_2">
+       <property name="geometry">
+        <rect>
+         <x>650</x>
+         <y>190</y>
+         <width>171</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#comboBox {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding-left: 10px;
+}
+
+
+
+#comboBox:on {
+    border: 4px solid #c2dbfe; 
+}
+
+#comboBox QListView {
+    font-size: 12px;
+    border: 1px solid rgba(0, 0, 0, 10%);
+    padding: 5px;
+    background-color: #fff;
+    outline: 0px;
+}
+</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>ID_MAT ASC</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ID_MAT DESC</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ETAT ASC</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ETAT DESC</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="sort">
+       <property name="geometry">
+        <rect>
+         <x>840</x>
+         <y>180</y>
+         <width>131</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(0, 0, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Sort</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/sort.png</normaloff>:/icons/ressource/icons/sort.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>60</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+      <zorder>label_34</zorder>
+      <zorder>Stat</zorder>
+      <zorder>ListMat</zorder>
+      <zorder>AddMat</zorder>
+      <zorder>label_35</zorder>
+      <zorder>tableView</zorder>
+      <zorder>pdf</zorder>
+      <zorder>delete_2</zorder>
+      <zorder>update</zorder>
+      <zorder>searchbar</zorder>
+      <zorder>comboBox_2</zorder>
+      <zorder>sort</zorder>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <widget class="QLabel" name="label_39">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>90</y>
+         <width>1011</width>
+         <height>391</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    background-color: #C0C0C0;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 30px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="IDFOR">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>290</y>
+         <width>441</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> background-color: rgb(255, 255, 255); 
+    border-radius: 15px; 
+    border: 1px solid black;</string>
+       </property>
+       <property name="placeholderText">
+        <string>ID FOURNISSEUR</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="PRIX">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>190</y>
+         <width>441</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> background-color: rgb(255, 255, 255); 
+    border-radius: 15px; 
+    border: 1px solid black;</string>
+       </property>
+       <property name="placeholderText">
+        <string>PRIX</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cadd">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>380</y>
+         <width>111</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(255, 107, 107, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 107, 107, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>ADD</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/addition.png</normaloff>:/icons/ressource/icons/addition.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cupdate">
+       <property name="geometry">
+        <rect>
+         <x>380</x>
+         <y>380</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgba(85, 98, 112, 255);
+    color: rgba(255, 255, 255, 200);
+    border-radius: 5px;
+}
+
+QPushButton:pressed {
+    padding-left: 5px;
+    padding-top: 5px;
+    background-color: rgba(255, 107, 107, 255);
+    background-position: calc(100% - 10px) center;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 107, 107, 255);
+}
+</string>
+       </property>
+       <property name="text">
+        <string>UPDATE</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/ressource/icons/refresh.png</normaloff>:/icons/ressource/icons/refresh.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="IDEMP">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>240</y>
+         <width>441</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> background-color: rgb(255, 255, 255); 
+    border-radius: 15px; 
+    border: 1px solid black;</string>
+       </property>
+       <property name="placeholderText">
+        <string>ID EMPLOYEE</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="ETAT">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>140</y>
+         <width>441</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> background-color: rgb(255, 255, 255); 
+    border-radius: 15px; 
+    border: 1px solid black;</string>
+       </property>
+       <property name="placeholderText">
+        <string>ETAT</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_23">
+       <property name="geometry">
+        <rect>
+         <x>610</x>
+         <y>100</y>
+         <width>471</width>
+         <height>371</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">image: url(:/images/ressource/images/APP_3.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
