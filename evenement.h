@@ -17,7 +17,7 @@ public:
   evenement(){}
   evenement(int,QString,QString,QString,int);
   evenement(QString type_event,QString duree,QString sponsor,int montant);
-  QList<int> getMontants();
+
 
   // Getters
   int getID() {return id;}

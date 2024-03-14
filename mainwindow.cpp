@@ -10,6 +10,10 @@
 #include <QPrinter>
 #include <QPainter>
 #include <QRegularExpression>
+#include <QAxWidget>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QGraphicsView>
+#include <QtCharts/QPieSeries>
 
 
 using namespace std;
@@ -18,7 +22,22 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->tableView->setModel(Etmp.afficher()); // Passez la connexion à la méthode afficher()
+    ui->tableView->setModel(Etmp.afficher());
+
+
+    series = new QtCharts::QPieSeries();
+       chartView = new QtCharts::QChartView();
+       chartView->setRenderHint(QPainter::Antialiasing);
+
+
+
+
+
+
+
+
+
+
 
     connect(ui->pushButton_9,&QPushButton::clicked,this,&MainWindow::clicker_list);
     connect(ui->pushButton_7,&QPushButton::clicked,this,&MainWindow::clicker_list1);
@@ -28,14 +47,9 @@ MainWindow::MainWindow(QWidget *parent)
     //connect(ui->pushButton_delete,&QPushButton::clicked,this,&MainWindow::clicker_delete);
     connect(ui->pushButton_add,&QPushButton::clicked,this,&MainWindow::clicker_add);
     connect(ui->pushButton_modifier,&QPushButton::clicked,this,&MainWindow::clicker_update);
-    connect(ui->pushButton_statistique,&QPushButton::clicked,this,&MainWindow::clicker_statistics);
-    connect(ui->delete_2, &QPushButton::clicked, this, &MainWindow::on_deleteButton_clicked);
-    connect(ui->word, &QPushButton::clicked, this, [this]() {
-            QString fileName = QFileDialog::getSaveFileName(this, "Save Word Document", QDir::currentPath(), "Word Files (*.docx)");
-            if (!fileName.isEmpty()) {
-                exportToWord(fileName);
-            }
-        });
+
+    connect(ui->delete_2, &QPushButton::clicked, this, &MainWindow::on_deleteButtonEvent_clicked);
+
 
 
 
@@ -44,10 +58,37 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->lineEdit_search, &QLineEdit::textChanged, this, &MainWindow::searchEvent);
     connect(ui->pushButton_asc, &QPushButton::clicked, this, &MainWindow::sortAscending);
     connect(ui->pushButton_desc, &QPushButton::clicked, this, &MainWindow::sortDescending);
-    connect(ui->exportPdfButton, &QPushButton::clicked, this, &MainWindow::exportPdf);
+    connect(ui->exportPdfButton, &QPushButton::clicked, this, &MainWindow::exportPdfEvent);
+    connect(ui->exportCsvButton, &QPushButton::clicked, this, &MainWindow::exportCsv);
+
+    connect(ui->pushButton_statistique_2, &QPushButton::clicked, this, &MainWindow::on_pushButton_statistique_2_clicked);
+
+    connect(ui->goevent, &QPushButton::clicked, this, &MainWindow::on_goevent_clicked);
 
 
 
+
+
+
+    //tache materiels
+    connect(ui->materiel, &QPushButton::clicked, this, &MainWindow::on_pushButton_4_clicked);
+    connect(ui->tableView_2, &QTableView::activated, this, &MainWindow::on_tableView_activated);
+    connect(ui->delete_3, &QPushButton::clicked, this, &MainWindow::on_deleteButton_clicked);
+    connect(ui->updatemat, &QPushButton::clicked, this, &MainWindow::onUpdateButtonClicked);
+    connect(ui->cupdate, &QPushButton::clicked, this, &MainWindow::onMUpdateButtonClicked);
+    connect(ui->cadd, &QPushButton::clicked, this, [this]() { navigateToPage(6); });
+    connect(ui->cupdate, &QPushButton::clicked, this, [this]() { navigateToPage(6); });
+    connect(ui->ListMat, &QPushButton::clicked, this, [this]() { navigateToPage(6); });
+    connect(ui->AddMat, &QPushButton::clicked, this, [this]() { navigateToPage(7); });
+    connect(ui->updatemat, &QPushButton::clicked, this, [this]() { navigateToPage(7); });
+    //connect(ui->Stat, &QPushButton::clicked, this, [this]() { navigateToPage(2); });
+    connect(ui->pdf, &QPushButton::clicked, this, &MainWindow::exportPdf);
+    ui->tableView_2->setEditTriggers(QAbstractItemView::AnyKeyPressed);
+    QStackedWidget* stackedWidget = ui->stackedWidget;
+    QWidget * page = stackedWidget->widget(6);
+    QTableView * tableView_2= page->findChild<QTableView*>("tableView_2");
+    materiel m;
+      ui->tableView_2->setModel(m.afficher_mat());
 }
 
 MainWindow::~MainWindow()
@@ -76,6 +117,15 @@ void MainWindow::clicker_delete()
    ui->stackedWidget->setCurrentIndex(4);
 }
 
+
+void MainWindow::clicker_statistics()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+
+
+}
+
+
 void MainWindow::clicker_add()
 {
    ui->stackedWidget->setCurrentIndex(3);
@@ -86,6 +136,7 @@ void MainWindow::clicker_update()
 {
    ui->stackedWidget->setCurrentIndex(2);
 }
+
 #include <QRegularExpression>
 
 void MainWindow::on_pushButton_ajouter_clicked()
@@ -161,7 +212,7 @@ void MainWindow::on_pushButton_ajouter_clicked()
     }
 
 }*/
-void MainWindow::on_deleteButton_clicked()
+void MainWindow::on_deleteButtonEvent_clicked()
 {
     QModelIndexList selectedIndexes = ui->tableView->selectionModel()->selectedRows();
     if (!selectedIndexes.isEmpty()) {
@@ -274,16 +325,16 @@ void MainWindow::sortDescending()
     ui->tableView->setModel(model);
 }
 
-void MainWindow::exportPdf()
+void MainWindow::exportPdfEvent()
 {
     QString fileName = QFileDialog::getSaveFileName(this, "Export PDF", "", "PDF files (*.pdf)");
     if (!fileName.isEmpty())
     {
-        exportToPdf(fileName, ui->tableView); // Utilisez votre QTableView ici
+        exportToPdfEvent(fileName, ui->tableView); // Utilisez votre QTableView ici
     }
 }
 
-void MainWindow::exportToPdf(const QString &fileName, QTableView *tableView)
+void MainWindow::exportToPdfEvent(const QString &fileName, QTableView *tableView)
 {
     QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
@@ -307,80 +358,307 @@ void MainWindow::exportToPdf(const QString &fileName, QTableView *tableView)
 
 
 
-void MainWindow::clicker_statistics()
+
+
+
+
+//EXELL
+
+
+
+
+void MainWindow::exportCsv()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "events.csv", tr("CSV Files (*.csv);;All Files (*)"));
+    if (fileName.isEmpty())
+        return;
 
-
-}
-
-QList<int> evenement::getMontants() {
-    QList<int> montants;
-    QSqlQuery query;
-    query.prepare("SELECT montant FROM evenements");
-    if (query.exec()) {
-        while (query.next()) {
-            montants.append(query.value(0).toInt());
-        }
-    } else {
-        qDebug() << "Erreur lors de la récupération des montants : " << query.lastError().text();
-    }
-    return montants;
-}
-
-void MainWindow::clicker_statistics1()
-{
-    // Récupérer les montants depuis la base de données
-    evenement E;
-    QList<int> montants = E.getMontants();
-
-    // Créer le jeu de données pour le graphique
-    QPieSeries *series = new QPieSeries();
-    foreach (int montant, montants) {
-        series->append(QString::number(montant), montant);
-    }
-
-    // Créer le graphique à secteurs
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Statistiques de montant");
-
-    // Créer et afficher la vue du graphique
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->resize(400, 300); // Définir la taille de la vue du graphique
-
-    // Afficher le graphique dans le widget de votre interface utilisateur
-    ui->statisticsWidget->layout()->addWidget(chartView);
-}
-void MainWindow::exportToWord(const QString &fileName)
-{
-    QTextDocument doc;
-    QAbstractItemModel * model = ui->tableView->model();
-    int rows = model->rowCount();
-    int cols = model->columnCount();
-    QString tableData;
-    for (int row = 0; row < rows; ++row) {
-        for (int col = 0; col < cols; ++col) {
-            QModelIndex index = model->index(row, col);
-            QString cellData = model->data(index).toString();
-            tableData.append(cellData);
-            if (col < cols - 1)
-                tableData.append("\t");
-            else
-                tableData.append("\n");
-        }
-    }
-    doc.setPlainText(tableData);
     QFile file(fileName);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&file);
-        out << doc.toPlainText();
-        file.close();
-    } else {
-        qDebug() << "Error: Could not open file for writing";
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, tr("Unable to open file"), file.errorString());
+        return;
+    }
+
+    QTextStream out(&file);
+    out.setCodec("UTF-8"); // Set UTF-8 encoding
+    // Column headers
+    out << "ID" << ";" << "TYPE_EVENT" << ";" << "DUREE" << ";" << "MONTANT" << ";" << "SPONSOR" << "\n";
+
+    QSqlQuery query("SELECT * FROM EVENEMENTS");
+    if (!query.exec()) {
+        qDebug() << "Error executing SQL query:" << query.lastError().text();
+        return;
+    }
+
+    while (query.next()) {
+        out << query.value("ID").toInt() << ";"
+            << query.value("TYPE_EVENT").toString() << ";"
+            << query.value("DUREE").toString() << ";"
+            << query.value("MONTANT").toInt() << ";"
+            << query.value("SPONSOR").toString() << "\n";
     }
 }
 
 
 
+
+//
+void MainWindow::on_statisticsButton_clicked()
+{
+    // Déplace l'affichage vers l'index 5 du stacked widget
+    ui->stackedWidget->setCurrentIndex(5);
+
+    // Prépare la requête SQL pour récupérer le montant total par type d'événement
+    QSqlQuery montantQuery;
+    montantQuery.prepare("SELECT type_event, SUM(montant) AS total_amount FROM evenements GROUP BY type_event");
+    montantQuery.exec();
+
+    // Crée une série de données pour le graphique en secteurs (camembert)
+    QPieSeries *pieSeries = new QPieSeries();
+    while (montantQuery.next())
+    {
+        QString eventType = montantQuery.value("type_event").toString();
+        int totalAmount = montantQuery.value("total_amount").toInt();
+        pieSeries->append(eventType, totalAmount);
+    }
+
+    // Crée un graphique et ajoute la série de données
+    QChart *chart = new QChart();
+     chart->addSeries(pieSeries);
+    chart->setTitle("Répartition par Montant");
+
+    // Crée une vue pour afficher le graphique
+    QChartView *chartView = new QChartView(chart);
+    ui->chartView->setRenderHint(QPainter::Antialiasing);
+
+    // Insère la vue du graphique à l'index 5 du stacked widget
+    ui->stackedWidget->insertWidget(5, chartView);
+    ui->chartView->setRenderHint(QPainter::Antialiasing);
+
+}
+
+
+
+
+void MainWindow::on_pushButton_statistique_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(5);
+
+    // Prépare la requête SQL pour récupérer le montant total par type d'événement
+    QSqlQuery montantQuery;
+    montantQuery.prepare("SELECT type_event, SUM(montant) AS total_amount FROM evenements GROUP BY type_event");
+    montantQuery.exec();
+
+    // Crée une série de données pour le graphique en secteurs (camembert)
+    QPieSeries *pieSeries = new QPieSeries();
+    while (montantQuery.next())
+    {
+        QString eventType = montantQuery.value("type_event").toString();
+        int totalAmount = montantQuery.value("total_amount").toInt();
+        pieSeries->append(eventType, totalAmount);
+    }
+
+    // Crée un graphique et ajoute la série de données
+    QChart *chart = new QChart();
+     chart->addSeries(pieSeries);
+    chart->setTitle("Répartition par Montant");
+
+    // Crée une vue pour afficher le graphique
+    QChartView *chartView = new QChartView(chart);
+    ui->chartView->setRenderHint(QPainter::Antialiasing);
+
+    // Insère la vue du graphique à l'index 5 du stacked widget
+    ui->stackedWidget->insertWidget(5, chartView);
+    ui->chartView->setRenderHint(QPainter::Antialiasing);
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(6);
+
+}
+
+
+// tache materiels
+
+void MainWindow::navigateToPage(int pageIndex)
+{
+    ui->stackedWidget->setCurrentIndex(pageIndex);
+}
+
+void MainWindow::on_tableView_activated(const QModelIndex &index)
+{
+    QStackedWidget* stackedWidget = ui->stackedWidget;
+    QWidget* page = stackedWidget->widget(6);
+    QLineEdit* id = page->findChild<QLineEdit*>("id");
+
+    if (!id) {
+        qDebug() << "ID LineEdit not found on page";
+        return;
+    }
+
+    QString value = ui->tableView_2->model()->data(ui->tableView_2->model()->index(index.row(), 0)).toString();
+    id->setText(value);
+    Connection c;
+    c.closeconnection();
+    QSqlQuery qry;
+
+    qry.prepare("SELECT ID_MAT, ETAT, PRIX, ID_EMP, ID_FOURNI FROM MATERIEL where ID_MAT=:id");
+    qry.bindValue(":id", value);
+    if (qry.exec())
+    {
+        while (qry.next())
+        {
+            ui->ETAT->setText(qry.value(0).toString());
+            ui->PRIX->setText(qry.value(1).toString());
+            ui->IDEMP->setText(qry.value(3).toString());
+            ui->IDFOR->setText(qry.value(4).toString());
+            int numbercoloumn;
+            numbercoloumn=ui->tableView_2->model()->columnCount();
+            qDebug()<<numbercoloumn;
+        }
+    }
+    else {
+        qDebug() << "Query failed:" << qry.lastError().text();
+    }
+}
+void MainWindow::on_cadd_clicked()
+{
+    QString etat = ui->ETAT->text();
+    QString prix = ui->PRIX->text();
+    QString id_emp = ui->IDEMP->text();
+    QString id_fourni = ui->IDFOR->text();
+    materiel Materiel(etat, prix.toFloat(), id_emp.toInt(), id_fourni.toInt());
+
+    bool test = Materiel.ajouter_mat();
+    ui->tableView_2->setModel(Materiel.afficher_mat());
+    if (test)
+    {
+        QMessageBox::information(nullptr, QObject::tr("ok"),
+            QObject::tr("Ajout effectue\n"
+                "Click Cancel to exit."), QMessageBox::Cancel);
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, QObject::tr("NOT OK"),
+            QObject::tr("Ajout non effectuer\n"
+                "Click Cancel to exit."), QMessageBox::Cancel);
+    }
+}
+
+void MainWindow::on_deleteButton_clicked()
+{
+    QModelIndexList selectedIndexes = ui->tableView_2->selectionModel()->selectedRows();
+    if (!selectedIndexes.isEmpty()) {
+        int row = selectedIndexes.first().row();
+        qDebug() << "Selected Index Row:" << row;
+        int id_mat = ui->tableView_2->model()->data(ui->tableView_2->model()->index(row, 0)).toInt();
+        qDebug() << "Selected Employee ID:" << id_mat;
+        QMessageBox::StandardButton confirmation;
+        confirmation = QMessageBox::question(this, "Confirm Deletion",
+                                             "Are you sure you want to delete the employee with ID: " + QString::number(id_mat) + "?",
+                                             QMessageBox::Yes|QMessageBox::No);
+
+        if (confirmation == QMessageBox::Yes) {
+           materiel Materiel;
+           bool success = Materiel.delete_mat(id_mat);
+            if(success) {
+                ui->tableView_2->setModel(Materiel.afficher_mat());
+                QMessageBox::information(this, "Employee Deleted", "The selected employee has been deleted.");
+            } else {
+                QMessageBox::warning(this, "Error", "Failed to delete employee.");
+            }
+        }
+    } else {
+        QMessageBox::warning(this, "No Employee Selected", "Please select an employee to delete.");
+    }
+}
+void MainWindow::onUpdateButtonClicked()
+{
+    QModelIndexList selectedIndexes = ui->tableView_2->selectionModel()->selectedRows();
+    if (selectedIndexes.isEmpty()) {
+        QMessageBox::warning(this, "No Row Selected", "Please select a material to update.");
+        return;
+    }
+    int row = selectedIndexes.first().row();
+    QString etat = ui->tableView_2->model()->index(row, 1).data().toString();
+    QString prix = ui->tableView_2->model()->index(row, 2).data().toString();
+    QString id_emp = ui->tableView_2->model()->index(row, 3).data().toString();
+    QString id_fourni = ui->tableView_2->model()->index(row, 4).data().toString();
+    ui->ETAT->setText(etat);
+    ui->PRIX->setText(prix);
+    ui->IDEMP->setText(id_emp);
+    ui->IDFOR->setText(id_fourni);
+    navigateToPage(1);
+}
+void MainWindow::onMUpdateButtonClicked()
+{
+    QString etat = ui->ETAT->text();
+    QString prix = ui->PRIX->text();
+    QString id_emp = ui->IDEMP->text();
+    QString id_fourni = ui->IDFOR->text();
+
+    QModelIndexList selectedIndexes = ui->tableView_2->selectionModel()->selectedRows();
+    if (selectedIndexes.isEmpty()) {
+        QMessageBox::warning(this, "No Row Selected", "Please select a material to update.");
+        return;
+    }
+
+    int row = selectedIndexes.first().row();
+    int id_mat = ui->tableView_2->model()->index(row, 0).data().toInt();
+ materiel Materiel;
+    bool success =  Materiel.updateMaterial(id_mat, etat, prix.toInt(), id_emp.toInt(), id_fourni.toInt());
+    if (success) {
+        QMessageBox::information(this, "Update Successful", "Material information updated successfully.");
+        navigateToPage(0);
+        ui->tableView_2->setModel(Materiel.afficher_mat());
+        ui->ETAT->clear();
+        ui->PRIX->clear();
+        ui->IDEMP->clear();
+        ui->IDFOR->clear();
+    } else {
+        QMessageBox::warning(this, "Update Failed", "Failed to update material information.");
+    }
+}
+
+void MainWindow::exportPdf()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Export PDF", "", "PDF files (.pdf)");
+    if (!fileName.isEmpty())
+    {
+        exportToPdf(fileName, ui->tableView_2); // Utilisez votre QtableView_2 ici
+    }
+}
+
+void MainWindow::exportToPdf(const QString &fileName, QTableView *tableView_2)
+{
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(fileName);
+
+    QPainter painter;
+    painter.begin(&printer);
+
+    double xscale = printer.pageRect().width() / double(tableView_2->width());
+    double yscale = printer.pageRect().height() / double(tableView_2->height());
+    double scale = qMin(xscale, yscale);
+
+    painter.translate(printer.paperRect().x() + printer.pageRect().width() / 2,
+                      printer.paperRect().y() + printer.pageRect().height() / 2);
+    painter.scale(scale, scale);
+    painter.translate(-tableView_2->width() / 2, -tableView_2->height() / 2);
+
+    tableView_2->render(&painter);
+    painter.end();
+}
+
+
+
+
+
+
+
+void MainWindow::on_goevent_clicked()
+{
+   ui->stackedWidget->setCurrentIndex(0);
+}

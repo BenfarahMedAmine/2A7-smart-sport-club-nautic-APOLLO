@@ -16,4 +16,5 @@ bool Connection::createconnect()
     test=true;
   return test;
 }
+
 void Connection::closeconnection(){}

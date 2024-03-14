@@ -5,6 +5,8 @@ CONFIG += c++11
 CONFIG += console
 QT += charts
 QT += core gui printsupport
+QT += axcontainer
+
 
 
 # The following define makes your compiler emit warnings if you use
@@ -22,12 +24,14 @@ SOURCES += \
     connection.cpp \
     evenement.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    materiel.cpp
 
 HEADERS += \
     connection.h \
     evenement.h \
-    mainwindow.h
+    mainwindow.h \
+    materiel.h
 
 FORMS += \
     mainwindow.ui
