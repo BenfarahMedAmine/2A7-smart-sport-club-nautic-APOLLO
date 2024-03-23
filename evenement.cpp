@@ -1,32 +1,34 @@
 #include "evenement.h"
 #include <QDebug>
+#include <QStackedWidget>
+#include <QMap>
+#include <QFile>
+#include <QString>
+#include <QApplication>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QSqlError>
-#include <vector>
-evenement:: evenement(int id ,QString type_event,QString duree,QString sponsor,int montant)
+#include <QSqlQueryModel>
 
+evenement:: evenement(int id_event,QString type_event,QString duree,QString sponsor,int montant)
 {
-
- this->id=id;
+ this->id_event=id_event;
  this->type_event=type_event;
  this->duree=duree;
  this->sponsor=sponsor;
  this->montant=montant;
-
 }
 evenement:: evenement(QString type_event,QString duree,QString sponsor,int montant)
 
 {
-
-
  this->type_event=type_event;
   this->duree=duree;
   this->sponsor=sponsor;
  this->montant=montant;
-
 }
 
 
-bool evenement::ajouter()
+bool evenement::ajouterevenement()
 {
     QSqlQuery query;
     query.prepare("INSERT INTO EVENEMENTS (TYPE_EVENT, duree, montant, sponsor) VALUES (:type_event, :duree, :montant, :sponsor)");
@@ -46,50 +48,32 @@ bool evenement::ajouter()
 
 
 
-QSqlQueryModel* evenement::afficher()
+QSqlQueryModel* evenement::afficherevenement()
 {
-  /*  QSqlQueryModel * model=new QSqlQueryModel();
-    model->setQuery(" SELECT * FROM EVENEMENTS ");
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("ID"));
-    model->setHeaderData(1,Qt::Horizontal,QObject::tr("type_event "));
-    model->setHeaderData(2,Qt::Horizontal,QObject::tr(" duree "));
-    model->setHeaderData(3,Qt::Horizontal,QObject::tr(" montant "));
-    model->setHeaderData(4,Qt::Horizontal,QObject::tr(" sponsor "));
-    qDebug() << "Nombre de lignes récupérées depuis la base de données : " << model->rowCount();
-
-return model ;*/
     QSqlQueryModel* model = new QSqlQueryModel();
-       QSqlDatabase db = QSqlDatabase::database(); // Récupère la connexion active à la base de données
+       QSqlDatabase db = QSqlDatabase::database();
 
-       if (!db.isOpen()) { // Vérifie si la connexion est ouverte
+       if (!db.isOpen()) {
            qDebug() << "Erreur: Connexion à la base de données non ouverte.";
-           return nullptr; // Retourne un modèle nul en cas d'erreur
+           return nullptr;
        }
 
-       QSqlQuery query(db); // Utilise la connexion active pour la requête
+       QSqlQuery query(db);
 
        if (!query.exec("SELECT * FROM EVENEMENTS")) { // Exécute la requête SQL
            qDebug() << "Erreur lors de l'exécution de la requête :" << query.lastError().text();
-           return nullptr; // Retourne un modèle nul en cas d'erreur
+           return nullptr;
        }
+       model->setQuery(query);
 
-       model->setQuery(query); // Définit le modèle de données avec les résultats de la requête
-
-       return model; // Retourne le modèle de données
+       return model;
 }
-/*
-bool evenement::supprimer(int id)
-{ QSqlQuery query ;
-  QString res=QString ::number(id);
-query.prepare((" Delete from evenements where ID= :id"));
-query.bindValue(":id",res);
-return query.exec();
-}*/
-bool evenement::deleteEvent(int id)
+
+bool evenement::deleteEvent(int id_event)
 {
     QSqlQuery query;
-    query.prepare("DELETE FROM evenements WHERE ID = :id");
-    query.bindValue(":id", id);
+    query.prepare("DELETE FROM evenements WHERE id_event = :id_event");
+    query.bindValue(":id_event", id_event);
 
     if (!query.exec()) {
         qDebug() << "Erreur lors de la suppression de l'événement :" << query.lastError().text();
@@ -99,22 +83,22 @@ bool evenement::deleteEvent(int id)
     return true;
 }
 
-bool evenement::modifier(int id)
+bool evenement:: modifierevenement(int ID_EVENT, const QString& TYPE_EVENT, const QString& DUREE, double MONTANT, const QString& SPONSOR)
 {
-    QString rid=QString::number(id);
+    QSqlQuery query_Update;
+    query_Update.prepare("UPDATE EVENEMENTS SET TYPE_EVENT = :type_event, DUREE = :duree, MONTANT = :montant, SPONSOR = :sponsor WHERE ID_EVENT = :id_event");
+    query_Update.bindValue(":type_event", TYPE_EVENT);
+    query_Update.bindValue(":duree", DUREE);
+    query_Update.bindValue(":montant", MONTANT);
+    query_Update.bindValue(":sponsor", SPONSOR);
+    query_Update.bindValue(":id_event", ID_EVENT);
 
-        QSqlQuery query;
-           query.prepare(QString("update evenements set type_event=:type_event,duree=:duree,montant=:montant,sponsor=:sponsor where id=:id"));
-
-           query.bindValue(":id",rid);
-           query.bindValue(":type_event",type_event);
-           query.bindValue(":duree", duree);
-
-           query.bindValue(":montant",montant);
-           query.bindValue(":sponsor", sponsor);
-
-
-         return  query.exec();
+    bool success = query_Update.exec();
+    if (!success)
+    {
+        qDebug() << "Error updating event:" << query_Update.lastError().text();
+        qDebug() << "Query executed:" << query_Update.lastQuery();
+    }
+    return success;
 }
-
 

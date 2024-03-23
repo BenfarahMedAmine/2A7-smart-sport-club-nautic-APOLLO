@@ -1,13 +1,10 @@
-QT       += core gui sql
+QT       += core gui
+QT       += sql
+QT       += core gui printsupport
+QT       += charts
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
-CONFIG += console
-QT += charts
-QT += core gui printsupport
-QT += axcontainer
-
-
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -22,6 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     connection.cpp \
+    employee.cpp \
     evenement.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -29,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     connection.h \
+    employee.h \
     evenement.h \
     mainwindow.h \
     materiel.h
@@ -40,3 +39,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Ressource.qrc
